@@ -23,4 +23,9 @@ describe('Fixnum#numbers_to_words')do
     expect(3171.numbers_to_words()).to(eq('three thousand one hundred seventy one'))
     expect(5710.numbers_to_words()).to(eq('five thousand seven hundred ten'))
   end
+  it('converts five digits to written form')do
+    expect(31715.numbers_to_words()).to(eq('thirty one thousand seven hundred fifteen'))
+    expect(57108.numbers_to_words()).to(eq('fifty seven thousand one hundred eight'))
+  end
+
 end

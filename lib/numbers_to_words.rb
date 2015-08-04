@@ -32,7 +32,7 @@ class Fixnum
 
     number_string = self.to_s()
     string_array = Array.new()
-    
+
     while number_string.length() > 0 do
       # do stuff
       puts "number_string = #{number_string}"
@@ -54,6 +54,10 @@ class Fixnum
         first_word = single_digit_hash.fetch(number_string[0].to_i())
         second_word = "hundred"
         string_array.push([first_word, second_word])
+      when 4
+        first_word = single_digit_hash.fetch(number_string[0].to_i())
+        second_word = "thousand"
+        string_array.push([first_word, second_word])
       else
         # don't do anything
       end
@@ -62,25 +66,6 @@ class Fixnum
       number_string.replace number_string[1..-1]
     end
 
-    # string_array = Array.new()
-    # if number_length == 1
-    #   string_array.push(single_digit_hash.fetch(self))
-    # elsif number_length == 2
-    #   first_word = double_digit_hash.fetch(number_string[0].to_i())
-    #
-    #   if number_string[0] == '1' # do not need to fetch second word
-    #     first_word = first_char.fetch(number_string[1].to_i())
-    #     string_array.push(first_word)
-    #   else  # need to fetch second word
-    #     string_array.push(first_word)
-    #     string_array.push(single_digit_hash.fetch(number_string[1].to_i()))
-    #   end
-    # elsif number_length == 3
-    #   first_word = single_digit_hash.fetch(number_string[0].to_i())
-    #   second_word = "hundred"
-    #   #third_word =
-    # end
     string_array.join(' ')
-
   end
 end

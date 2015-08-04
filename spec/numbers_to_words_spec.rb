@@ -33,4 +33,9 @@ describe('Fixnum#numbers_to_words')do
     expect(317154.numbers_to_words()).to(eq('three hundred seventeen thousand one hundred fifty four'))
     expect(571080.numbers_to_words()).to(eq('five hundred seventy one thousand eighty'))
   end
+
+  it('converts seven digits to written form')do
+    expect(3171548.numbers_to_words()).to(eq('three million one hundred seventy one thousand five hundred forty eight'))
+    expect(5710801.numbers_to_words()).to(eq('five million seven hundred ten thousand eight hundred one'))
+  end
 end

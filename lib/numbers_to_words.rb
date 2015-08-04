@@ -39,7 +39,7 @@ class Fixnum
       $string_array.push(word) unless word.eql?('zero')
     end
 
-    def handle_two_digit_number()
+    def treat_as_double_digit_with_type(type)
       first_word = $double_digit_hash.fetch($number_string[0].to_i())
 
       if $number_string[0] == '0' || $number_string[0] == '1' # do not need to fetch second word
@@ -50,9 +50,10 @@ class Fixnum
         $string_array.push(first_word)
         $string_array.push(second_word) unless second_word.eql?('zero')
       end
+      $string_array.push(type) unless type.eql?('none')
     end
 
-    def handle_three_digit_number(type)
+    def treat_as_single_digit_with_type(type)
       if !$string_array.include?(type)
         first_word = $single_digit_hash.fetch($number_string[0].to_i())
         if !first_word.eql?('zero')
@@ -69,17 +70,18 @@ class Fixnum
       when 1
         handle_one_digit_number()
       when 2
-        handle_two_digit_number()
+        treat_as_double_digit_with_type('none')
         break
       when 3
-        handle_three_digit_number("hundred")
+        treat_as_single_digit_with_type('hundred')
       when 4
-        handle_three_digit_number("thousand")
+        treat_as_single_digit_with_type('thousand')
       when 5
-        handle_two_digit_number()
-        $string_array.push("thousand")
+        treat_as_double_digit_with_type('thousand')
       when 6
-        handle_three_digit_number("hundred")
+        treat_as_single_digit_with_type('hundred')
+      when 7
+        treat_as_single_digit_with_type('million')
       else
         # don't do anything
       end

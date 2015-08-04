@@ -31,29 +31,55 @@ class Fixnum
                          9 => 'ninety'}
 
     number_string = self.to_s()
-    number_length = number_string.length()
-
-    # number_string.each_char() do |char|
-    #   index_of_char = number_string.index(char)
-    #
-    #   puts "char: #{char} at index: #{index_of_char}"
-    # end
-
     string_array = Array.new()
-    if number_length == 1
-      string_array.push(single_digit_hash.fetch(self))
-    elsif number_length == 2
-      first_char = double_digit_hash.fetch(number_string[0].to_i())
+    
+    while number_string.length() > 0 do
+      # do stuff
+      puts "number_string = #{number_string}"
+      case number_string.length()
+      when 1
+        string_array.push(single_digit_hash.fetch(number_string[0].to_i()))
+      when 2
+        first_word = double_digit_hash.fetch(number_string[0].to_i())
 
-      if number_string[0] == '1' # do not need to fetch second char
-        first_char = first_char.fetch(number_string[1].to_i())
-        string_array.push(first_char)
-      else  # need to fetch second char
-        string_array.push(first_char)
-        string_array.push(single_digit_hash.fetch(number_string[1].to_i()))
+        if number_string[0] == '1' # do not need to fetch second word
+          first_word = first_word.fetch(number_string[1].to_i())
+          string_array.push(first_word)
+        else  # need to fetch second word
+          string_array.push(first_word)
+          string_array.push(single_digit_hash.fetch(number_string[1].to_i()))
+        end
+        break
+      when 3
+        first_word = single_digit_hash.fetch(number_string[0].to_i())
+        second_word = "hundred"
+        string_array.push([first_word, second_word])
+      else
+        # don't do anything
       end
 
+      # chop off analyzed digit
+      number_string.replace number_string[1..-1]
     end
+
+    # string_array = Array.new()
+    # if number_length == 1
+    #   string_array.push(single_digit_hash.fetch(self))
+    # elsif number_length == 2
+    #   first_word = double_digit_hash.fetch(number_string[0].to_i())
+    #
+    #   if number_string[0] == '1' # do not need to fetch second word
+    #     first_word = first_char.fetch(number_string[1].to_i())
+    #     string_array.push(first_word)
+    #   else  # need to fetch second word
+    #     string_array.push(first_word)
+    #     string_array.push(single_digit_hash.fetch(number_string[1].to_i()))
+    #   end
+    # elsif number_length == 3
+    #   first_word = single_digit_hash.fetch(number_string[0].to_i())
+    #   second_word = "hundred"
+    #   #third_word =
+    # end
     string_array.join(' ')
 
   end

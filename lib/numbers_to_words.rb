@@ -42,15 +42,15 @@ class Fixnum
     def treat_as_double_digit_with_type(type)
       first_word = $double_digit_hash.fetch($number_string[0].to_i())
 
-      if $number_string[0] == '0' || $number_string[0] == '1' # do not need to fetch second word
+      if $number_string[0] == '0' || $number_string[0] == '1'
         first_word = first_word.fetch($number_string[1].to_i())
-        $string_array.push(first_word)
-      else  # need to fetch second word
+        $string_array.push(first_word) unless first_word.eql?('zero')
+      else
         second_word = $single_digit_hash.fetch($number_string[1].to_i())
-        $string_array.push(first_word)
+        $string_array.push(first_word) unless first_word.eql?('zero')
         $string_array.push(second_word) unless second_word.eql?('zero')
       end
-      $string_array.push(type) unless type.eql?('none')
+      $string_array.push(type) unless type.eql?('none') unless first_word.eql?('zero')
     end
 
     def treat_as_single_digit_with_type(type)
@@ -82,6 +82,8 @@ class Fixnum
         treat_as_single_digit_with_type('hundred')
       when 7
         treat_as_single_digit_with_type('million')
+      when 8
+        treat_as_double_digit_with_type('million')
       else
         # don't do anything
       end

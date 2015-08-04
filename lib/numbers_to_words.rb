@@ -40,7 +40,8 @@ class Fixnum
       puts "string_array = #{string_array}"
       case number_string.length()
       when 1
-        string_array.push(single_digit_hash.fetch(number_string[0].to_i()))
+        word = single_digit_hash.fetch(number_string[0].to_i())
+        string_array.push(word) unless word.eql?('zero')
       when 2
         first_word = double_digit_hash.fetch(number_string[0].to_i())
 
@@ -48,14 +49,17 @@ class Fixnum
           first_word = first_word.fetch(number_string[1].to_i())
           string_array.push(first_word)
         else  # need to fetch second word
+          second_word = single_digit_hash.fetch(number_string[1].to_i())
           string_array.push(first_word)
-          string_array.push(single_digit_hash.fetch(number_string[1].to_i()))
+          string_array.push(second_word) unless second_word.eql?('zero')
         end
         break
       when 3
         first_word = single_digit_hash.fetch(number_string[0].to_i())
-        second_word = "hundred"
-        string_array.push([first_word, second_word])
+        if !first_word.eql?('zero')
+          second_word = "hundred"
+          string_array.push([first_word, second_word])
+        end
       when 4
         if !string_array.include?("thousand")
           first_word = single_digit_hash.fetch(number_string[0].to_i())
@@ -66,7 +70,7 @@ class Fixnum
         # TODO: remove duplication
         first_word = double_digit_hash.fetch(number_string[0].to_i())
 
-        if number_string[0] == '1' # do not need to fetch second word
+        if number_string[0] == '0' || number_string[0] == '1' # do not need to fetch second word
           first_word = first_word.fetch(number_string[1].to_i())
           string_array.push(first_word)
         else  # need to fetch second word
@@ -74,6 +78,13 @@ class Fixnum
           string_array.push(single_digit_hash.fetch(number_string[1].to_i()))
         end
         string_array.push("thousand")
+      when 6
+        if !string_array.include?("thousand")
+          #first_word = single_digit_hash.fetch(number_string[0].to_i())
+          first_word = single_digit_hash.fetch(number_string[0].to_i())
+          second_word = "hundred"
+          string_array.push([first_word, second_word])
+        end
       else
         # don't do anything
       end
